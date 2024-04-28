@@ -15,8 +15,7 @@ The below image is forecasting 180 minutes into the future.
 Results for TCN Modified:
 The loss vs epoch curves are shown below:
 <p align="center">
-  <img src="![image](https://github.com/KoushikKaranGeethaNagaraj/Evaluating-the-Impact-of-Deep-Learning-Models-on-Climate-Forecast-Accuracy/assets/116392599/c3cabfbf-839e-4f7f-bd8e-e203b0f840b0)
-" alt="Image 1" width="700" height="700"/>
+  <img src="![image](https://github.com/KoushikKaranGeethaNagaraj/Evaluating-the-Impact-of-Deep-Learning-Models-on-Climate-Forecast-Accuracy/assets/116392599/c3cabfbf-839e-4f7f-bd8e-e203b0f840b0)" alt="Image 1" width="700" height="700"/>
  </p>
  The below image is forecasting 180 minutes into the future.
 <p align="center">
