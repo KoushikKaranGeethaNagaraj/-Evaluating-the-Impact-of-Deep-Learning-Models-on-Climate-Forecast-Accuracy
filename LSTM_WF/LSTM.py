@@ -11,8 +11,12 @@ from sklearn.metrics import r2_score
 import matplotlib.pyplot as plt
 from keras.optimizers import Adam
 from sklearn.preprocessing import MinMaxScaler
+import psutil
+import time
 
-EPOCHS = 64 
+process = psutil.Process()
+memory_info = process.memory_info()
+EPOCHS = 100
 
 data = pd.read_csv('/Users/pranavsharma/Downloads/data.csv', encoding='ISO-8859-1')
 data = data.dropna()
@@ -41,6 +45,7 @@ X = scaler.fit_transform(X)
 y = scaler.fit_transform(y)
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+print(X_train.shape)
 print("Preprocessed Data.")
 
 
@@ -58,7 +63,7 @@ model.add(Dense(128, activation='relu'))
 model.add(LSTM(64, activation='relu'))
 model.add(Dense(64, activation='relu'))
 model.add(Dense(y.shape[1], activation='linear'))
-optimizer = Adam(learning_rate=0.002)
+optimizer = Adam(learning_rate=0.001)
 model.compile(optimizer=optimizer, loss='mean_squared_error', metrics=['accuracy', 'mape', 'mae'])
 print("Model built. Starting training...")
 print(Style.RESET_ALL)
@@ -123,21 +128,21 @@ fig, (ax1, ax2, ax3) = plt.subplots(nrows=1, ncols=3, figsize=(18, 6))
 
 ax1.plot(history.history['loss'])
 ax1.plot(history.history['val_loss'])
-ax1.set_title('Model Loss')
+ax1.set_title('MSE Vs EPOCH for LSTM')
 ax1.set_ylabel('MSE')
 ax1.set_xlabel('Epoch')
 ax1.legend(['Train', 'Validation'], loc='upper left')
 
 ax2.plot(history.history['mape'])
 ax2.plot(history.history['val_mape'])
-ax2.set_title('Model MAPE')
+ax2.set_title('MAPE Vs EPOCH for LSTM')
 ax2.set_ylabel('MAPE')
 ax2.set_xlabel('Epoch')
 ax2.legend(['Train', 'Validation'], loc='upper left')
 
 ax3.plot(history.history['mae'])
 ax3.plot(history.history['val_mae'])
-ax3.set_title('Model MAE')
+ax3.set_title('MAE Vs EPOCH for LSTM')
 ax3.set_ylabel('MAE')
 ax3.set_xlabel('Epoch')
 ax3.legend(['Train', 'Validation'], loc='upper left')
@@ -234,5 +239,4 @@ for i in range(num_dense_layers):
         dense_params += (units[i] * units[i-1]) + units[i]
 
 total_params = lstm_params + dense_params
-
-print("Total number of parameters in the LSTM architecture:", total_params)
+print(f"Used Memory: {memory_info.rss / (1024 * 1024 * 1024):.2f} GB")
